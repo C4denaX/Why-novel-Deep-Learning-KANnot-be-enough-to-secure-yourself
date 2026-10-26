@@ -1,0 +1,2 @@
+Dataset,Seed,Model,Test Accuracy,Test Precision,Test Recall,Test F1 Score,Test Loss,Number of Parameters,Best Epoch,Runtime (s),Device
+edge_iiotset,40,Convs_and_KAN,0.9333236749042594,0.808127872939975,0.7289704509738205,0.7261158622702479,0.08997303664701709,27100,9,37035.73223257065,NVIDIA RTX 6000 Ada Generation

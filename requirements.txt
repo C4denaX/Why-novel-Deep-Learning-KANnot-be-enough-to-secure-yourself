@@ -1,0 +1,10 @@
+# Install PyTorch first if you need a specific CUDA build (see https://pytorch.org/get-started/locally/).
+torch>=2.3
+numpy>=1.26
+pandas>=2.2
+scikit-learn>=1.6
+xgboost>=2.1
+lightgbm>=4.5
+catboost>=1.2.7
+# FastKAN (Apache License 2.0), installed from its repository at a fixed commit.
+fastkan @ git+https://github.com/ZiyaoLi/fast-kan.git@17b65401c252334fffb5e63c9852dd8316d29e69

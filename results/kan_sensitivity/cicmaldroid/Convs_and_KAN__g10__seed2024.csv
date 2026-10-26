@@ -1,0 +1,2 @@
+Dataset,Seed,Model,Grid Size,Spline Order,Test Accuracy,Test Precision,Test Recall,Test F1 Score,Test Loss,Number of Parameters,Best Epoch,Runtime (s),Device
+cicmaldroid,2024,Convs_and_KAN,10,,0.8905172413793103,0.8776940220643447,0.8716477098252092,0.8742865839645813,0.09850346823243007,131725,11,251.49056434631348,NVIDIA RTX 6000 Ada Generation

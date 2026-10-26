@@ -1,0 +1,135 @@
+{
+  "_notes": [
+    "Search spaces: discrete values chosen inside the ranges of Table 3 of the paper.",
+    "max_features 'auto' (Table 3) is not accepted by current scikit-learn; for classifiers it was equivalent to 'sqrt', so only 'sqrt' and 'log2' are searched.",
+    "XGBoost: 'eta' is an alias of 'learning_rate', so only 'learning_rate' is searched. Table 3 lists 'seed' in [0, 1000]; the two ends of the range are searched as 'random_state'.",
+    "LightGBM: 'subsample' only has an effect when 'subsample_freq' > 0, so 'subsample_freq' is fixed to 1.",
+    "Decision Tree is listed in Table 3 but is not part of the result tables; it is available but not run by default.",
+    "The paper does not give the number of trees or the selection threshold of the ERT feature selection; the values below are the ones used by this implementation.",
+    "Batch sizes of the DL and KAN models are those of the experiment code: 4 for the convolutional models, 64 for the recurrent models and the KAN model."
+  ],
+  "seed": 42,
+  "datasets": {
+    "cicmaldroid": {"name": "CICMaldroid2020", "file": "cicmaldroid.csv"},
+    "drebin": {"name": "Drebin-215", "file": "debrin.csv"},
+    "malgenome": {"name": "Malgenome-215", "file": "malgenome.csv"},
+    "tuandromd": {"name": "Tuandromd", "file": "TUANDROMD.csv"},
+    "wustl_iiot_2021": {"name": "WUSTL-IIOT-2021", "file": "wustl_iiot_2021.csv"},
+    "x_iiotid": {"name": "X-IIoTID", "file": "X-IIoTID dataset.csv"},
+    "edge_iiotset": {"name": "Edge-IIoTset", "file": "DNN-EdgeIIoT-dataset.csv"}
+  },
+  "preprocessing": {
+    "label_column": null,
+    "drop_columns": [],
+    "feature_selection": {
+      "enabled": true,
+      "threshold": "mean",
+      "max_features": null,
+      "estimator_params": {"n_estimators": 100, "criterion": "entropy", "n_jobs": -1}
+    }
+  },
+  "split": {
+    "test_size": 0.3,
+    "random_state": 42,
+    "cv_folds": 5
+  },
+  "ml": {
+    "scoring": "f1_macro",
+    "default_models": ["Random Forest", "Xgboost", "LightGBM", "Adaboost", "Catboost", "GradientBoost"],
+    "models": {
+      "Decision Tree": {
+        "class": "sklearn.tree.DecisionTreeClassifier",
+        "seed_param": "random_state",
+        "fixed": {},
+        "grid": {
+          "criterion": ["gini", "entropy"],
+          "max_depth": [5, 15, 30],
+          "min_samples_leaf": [1, 10, 50],
+          "min_samples_split": [2, 10, 20]
+        }
+      },
+      "Random Forest": {
+        "class": "sklearn.ensemble.RandomForestClassifier",
+        "seed_param": "random_state",
+        "fixed": {},
+        "grid": {
+          "max_depth": [5, 15, 30],
+          "n_estimators": [50, 100, 200],
+          "criterion": ["gini", "entropy"],
+          "max_features": ["sqrt", "log2"]
+        }
+      },
+      "Xgboost": {
+        "class": "xgboost.XGBClassifier",
+        "seed_param": null,
+        "device_param": "device",
+        "fixed": {"tree_method": "hist"},
+        "grid": {
+          "learning_rate": [0.01, 0.1, 0.2],
+          "max_depth": [3, 6, 10],
+          "subsample": [0.5, 1.0],
+          "random_state": [0, 1000]
+        }
+      },
+      "LightGBM": {
+        "class": "lightgbm.LGBMClassifier",
+        "seed_param": "random_state",
+        "fixed": {"subsample_freq": 1, "verbose": -1},
+        "grid": {
+          "learning_rate": [0.01, 0.1, 0.2],
+          "max_bin": [15, 255],
+          "max_depth": [3, 10, 20],
+          "num_leaves": [20, 100],
+          "subsample": [0.5, 1.0]
+        }
+      },
+      "Adaboost": {
+        "class": "sklearn.ensemble.AdaBoostClassifier",
+        "seed_param": "random_state",
+        "fixed": {},
+        "grid": {
+          "n_estimators": [50, 200, 600],
+          "learning_rate": [0.01, 0.1, 0.2]
+        }
+      },
+      "Catboost": {
+        "class": "catboost.CatBoostClassifier",
+        "seed_param": "random_seed",
+        "fixed": {"verbose": 0, "allow_writing_files": false},
+        "grid": {
+          "depth": [3, 6, 10],
+          "iterations": [10, 50, 100],
+          "learning_rate": [0.01, 0.1, 0.2]
+        }
+      },
+      "GradientBoost": {
+        "class": "sklearn.ensemble.GradientBoostingClassifier",
+        "seed_param": "random_state",
+        "fixed": {},
+        "grid": {
+          "max_depth": [3, 8, 15],
+          "max_features": ["sqrt", "log2"],
+          "min_samples_leaf": [10, 100],
+          "min_samples_split": [100, 1000],
+          "n_estimators": [50, 200],
+          "subsample": [0.5, 1.0]
+        }
+      }
+    }
+  },
+  "dl": {
+    "default_models": ["CNN (Small)", "CNN (Medium)", "CNN (Big)", "ConvKAN (Small)", "ConvKAN (Medium)", "ConvKAN (Big)", "Convs_and_KAN", "RNN", "LSTM", "GRU", "KAN"],
+    "batch_size": {"CNN": 4, "RNN": 64, "None": 64},
+    "search_space": {
+      "epochs": [30, 100, 200],
+      "learning_rate": [0.0001, 0.001, 0.01],
+      "weight_decay": [0.00001, 0.0001, 0.001],
+      "gamma": [0.8, 0.9, 0.99]
+    },
+    "kan": {
+      "ConKAN": {"grid_size": 5, "spline_order": 3},
+      "Conv & KAN": {"grid_size": 10, "spline_order": 3},
+      "KAN": {"num_grids": 8, "grid_min": -2.0, "grid_max": 2.0}
+    }
+  }
+}

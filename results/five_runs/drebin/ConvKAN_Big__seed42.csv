@@ -1,0 +1,2 @@
+Dataset,Seed,Model,Test Accuracy,Test Precision,Test Recall,Test F1 Score,Test Loss,Number of Parameters,Best Epoch,Runtime (s),Device
+drebin,42,ConvKAN (Big),0.9862558191088451,0.9868507023501676,0.9836448814919222,0.985207270219266,0.015348067524958535,1085875,11,777.9331798553467,NVIDIA RTX 6000 Ada Generation

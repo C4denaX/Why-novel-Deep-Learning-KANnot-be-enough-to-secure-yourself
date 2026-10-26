@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# OS
+.DS_Store
+
+# Library artefacts
+catboost_info/
+
+# Datasets (see data/README.md)
+data/*
+!data/README.md
+
+# Checkpoints
+*.pt
+*.pth
+*.ckpt
+checkpoints/
+
+# Default output folders of the scripts
+outputs/
+results_seeds/
+results_sensitivity/
+logs_seeds/
+logs_sensitivity/

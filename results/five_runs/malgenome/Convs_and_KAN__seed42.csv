@@ -1,0 +1,2 @@
+Dataset,Seed,Model,Test Accuracy,Test Precision,Test Recall,Test F1 Score,Test Loss,Number of Parameters,Best Epoch,Runtime (s),Device
+malgenome,42,Convs_and_KAN,0.9763157894736842,0.9754695950564145,0.9709515477232012,0.9731582017913718,0.015363021035425431,59725,8,46.58474922180176,NVIDIA RTX 6000 Ada Generation

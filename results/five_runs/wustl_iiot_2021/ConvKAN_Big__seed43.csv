@@ -1,0 +1,2 @@
+Dataset,Seed,Model,Test Accuracy,Test Precision,Test Recall,Test F1 Score,Test Loss,Number of Parameters,Best Epoch,Runtime (s),Device
+wustl_iiot_2021,43,ConvKAN (Big),0.9506083607746832,0.8685588947246023,0.7134550969641469,0.7658616159854447,0.2328306445019985,381363,10,68797.86982321739,NVIDIA RTX 6000 Ada Generation
